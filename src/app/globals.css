@@ -1,0 +1,359 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0b0f14;
+  --foreground: #a0a6b0;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ps: #39ff14;
+  --color-ps-deep: #1f8f0c;
+  --color-pitch: #39ff14;
+  --color-xbox: #39ff14;
+  --color-panel: #2a2f36;
+  --color-panel-2: #15191c;
+  --color-muted: #a0a6b0;
+  --color-line: rgba(57, 255, 20, 0.22);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-montserrat);
+  --font-mono: var(--font-inter);
+}
+
+html {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  min-height: 100%;
+  color: var(--foreground);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  background:
+    radial-gradient(900px 420px at 90% -10%, rgba(57, 255, 20, 0.1), transparent 55%),
+    #0b0f14;
+}
+
+.font-display {
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+}
+
+.stadium-wash {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at center, transparent 30%, rgba(0, 0, 0, 0.55) 100%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent 40%);
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.035) 0 1px,
+    transparent 1px 4px
+  );
+  mix-blend-mode: overlay;
+}
+
+.hud-card {
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+}
+
+.clip-hex {
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+
+.fz-slash {
+  background: linear-gradient(110deg, transparent 0 42%, #39ff14 42% 48%, transparent 48%);
+}
+
+.ticker {
+  display: flex;
+  width: max-content;
+  animation: ticker 32s linear infinite;
+  white-space: nowrap;
+  padding: 0.4rem 0;
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.mdx {
+  color: #d5dbe8;
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.mdx h2,
+.mdx h3 {
+  font-family: var(--font-montserrat), sans-serif;
+  color: white;
+  letter-spacing: 0.02em;
+  margin: 2rem 0 0.75rem;
+}
+
+.mdx p,
+.mdx ul {
+  margin: 0.9rem 0;
+}
+
+.mdx a {
+  color: #39ff14;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.mdx li {
+  margin-left: 1.2rem;
+  list-style: disc;
+}
+
+.zona-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  height: 12px;
+}
+
+.zona-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #39ff14;
+  animation: zona-bounce 1s ease-in-out infinite;
+}
+
+.zona-dots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.zona-dots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes zona-bounce {
+  0%,
+  80%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-4px);
+  }
+}
+
+/* —— Hover: brilho + movimento em tudo clicável —— */
+
+.fx-ease {
+  transition:
+    transform 0.32s cubic-bezier(0.34, 1.45, 0.64, 1),
+    box-shadow 0.32s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    color 0.2s ease,
+    filter 0.32s ease,
+    text-shadow 0.25s ease;
+}
+
+/* CTAs verdes: Entrar, Explorar, Precisa de ajuda, Enviar… */
+a.bg-pitch,
+button.bg-pitch:not(:disabled) {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 0.32s cubic-bezier(0.34, 1.45, 0.64, 1),
+    box-shadow 0.32s ease,
+    filter 0.32s ease;
+}
+
+a.bg-pitch::after,
+button.bg-pitch:not(:disabled)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.42) 50%,
+    transparent 62%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.55s ease;
+  pointer-events: none;
+}
+
+a.bg-pitch:hover,
+button.bg-pitch:not(:disabled):hover {
+  transform: translateY(-4px) scale(1.045);
+  box-shadow:
+    0 0 55px rgba(57, 255, 20, 0.62),
+    0 0 22px rgba(57, 255, 20, 0.45),
+    0 14px 36px rgba(57, 255, 20, 0.22);
+  filter: brightness(1.1);
+}
+
+a.bg-pitch:hover::after,
+button.bg-pitch:not(:disabled):hover::after {
+  transform: translateX(130%);
+}
+
+a.bg-pitch:active,
+button.bg-pitch:not(:disabled):active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+/* Botões outline (ícones, secundários) */
+a.rounded-full.border:not(.bg-pitch),
+button.rounded-full.border:not(.bg-pitch):not(:disabled) {
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1),
+    box-shadow 0.3s ease,
+    border-color 0.25s ease,
+    color 0.2s ease,
+    background-color 0.25s ease;
+}
+
+a.rounded-full.border:not(.bg-pitch):hover,
+button.rounded-full.border:not(.bg-pitch):not(:disabled):hover {
+  transform: translateY(-3px) scale(1.07);
+  border-color: rgba(57, 255, 20, 0.75);
+  box-shadow:
+    0 0 28px rgba(57, 255, 20, 0.38),
+    0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Cards de notícia / capa com imagem */
+a.group {
+  position: relative;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1),
+    box-shadow 0.35s ease,
+    border-color 0.3s ease;
+}
+
+a.group::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 0 rgba(57, 255, 20, 0);
+  transition: box-shadow 0.35s ease;
+  pointer-events: none;
+}
+
+a.group:hover {
+  transform: translateY(-7px) scale(1.015);
+  border-color: rgba(57, 255, 20, 0.62);
+  box-shadow:
+    0 0 44px rgba(57, 255, 20, 0.32),
+    0 22px 52px rgba(0, 0, 0, 0.48);
+}
+
+a.group:hover::before {
+  box-shadow: inset 0 0 70px rgba(57, 255, 20, 0.14);
+}
+
+a.group:hover img {
+  filter: brightness(1.12) saturate(1.08);
+}
+
+/* Cards de hub, campeonato, painéis clicáveis */
+a.rounded-2xl.border.bg-panel,
+a.rounded-3xl.border.bg-panel,
+a.hud-card.group {
+  transition:
+    transform 0.32s cubic-bezier(0.34, 1.4, 0.64, 1),
+    box-shadow 0.32s ease,
+    border-color 0.28s ease,
+    background-color 0.28s ease;
+}
+
+a.rounded-2xl.border.bg-panel:hover,
+a.rounded-3xl.border.bg-panel:hover,
+a.hud-card.group:hover {
+  transform: translateY(-5px) scale(1.012);
+  border-color: rgba(57, 255, 20, 0.58);
+  background-color: rgba(57, 255, 20, 0.06);
+  box-shadow:
+    0 0 38px rgba(57, 255, 20, 0.28),
+    0 18px 44px rgba(0, 0, 0, 0.4);
+}
+
+/* Links de texto (Ver todas, Ler matéria…) */
+a[class*="text-pitch"]:not(.bg-pitch),
+footer a,
+header nav a {
+  transition:
+    transform 0.25s ease,
+    text-shadow 0.25s ease,
+    color 0.2s ease;
+}
+
+a[class*="text-pitch"]:not(.bg-pitch):hover,
+footer a:hover,
+header nav a:hover {
+  text-shadow: 0 0 18px rgba(57, 255, 20, 0.62);
+  transform: translateX(3px);
+}
+
+/* Logo */
+header a[aria-label="FUTZONE início"] {
+  display: inline-block;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1),
+    filter 0.3s ease;
+}
+
+header a[aria-label="FUTZONE início"]:hover {
+  transform: scale(1.04);
+  filter: drop-shadow(0 0 14px rgba(57, 255, 20, 0.55));
+}
+
+/* Menu mobile */
+header a.rounded-lg {
+  transition:
+    transform 0.22s ease,
+    background-color 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+header a.rounded-lg:hover {
+  transform: translateX(4px);
+  box-shadow: inset 3px 0 0 rgba(57, 255, 20, 0.85);
+}
+
+/* Chips e pills clicáveis no chat */
+button.rounded-full.border:not(:disabled),
+a.rounded-full[class*="border-pitch"]:not(.bg-pitch) {
+  transition:
+    transform 0.26s ease,
+    box-shadow 0.26s ease,
+    border-color 0.22s ease,
+    color 0.2s ease;
+}
+
+button.rounded-full.border:not(:disabled):hover,
+a.rounded-full[class*="border-pitch"]:not(.bg-pitch):hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.35);
+}
+
+/* Formulários: botões HUD */
+button.hud-card.bg-pitch:not(:disabled):hover,
+button.w-full.bg-pitch:not(:disabled):hover {
+  transform: translateY(-3px) scale(1.02);
+}
